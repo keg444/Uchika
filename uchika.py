@@ -5,24 +5,32 @@ class Uchika():
         for i in range(len(functions)):
             print(f"{i+1}: {functions[i]}")
         
-        print("使用する機能を選択してください（終了する場合には99を入力）\n")
+        print("使用する機能を選択してください（終了する場合には99を入力）")
         input_func = int(input())
         # 入力チェック
-        if input_func not in(1, 2, 99):
+        if input_func not in range(1, len(functions)) and input_func != 99:
             print("正しい数値を入力してください．")
         return input_func
-    
+
     def select_station(self) -> int:   # 辞書にしたほうが良くね？
         stations = ["秋葉原", "山梨", "長野"]
         fares = [133, 4128, 7990]
         print("【乗車駅選択】\n")
         for i in range(len(stations)):
             print(f"{i+1}: {stations[i]}駅から : {fares[i]}円")
-        print("\n乗車した駅を入力してください（キャンセルする場合には99を入力）\n")
+        print("\n乗車した駅を入力してください（キャンセルする場合には99を入力）")
         while True:
-            destination = int(input())
+            # 整数以外の入力に対応ここから
+            # try:
+            #     destination = int(input())
+            #     if destination in range(1, len(stations)) and destination == 99:
+            #         break
+            # except ValueError:
+            #     print("VALUEEEEEEEEEEEEEEEEEEE")
+            # ここまで
             # 入力チェック
-            if destination not in range(1, len(stations)) and destination != 99:
+            destination = int(input())
+            if destination not in range(1, len(stations)+1) and destination != 99:
                 print("正しい数値を入力してください．")
                 continue
             if destination == 99:
@@ -31,7 +39,7 @@ class Uchika():
             break
         print(f"乗車駅は{stations[destination-1]}で料金は{fares[destination-1]}円です．")
         return fares[destination - 1]
-    
+
     def pay(self, balance: int, fare: int) -> int:  # charge=残高
         charge = 3000
         print(f"チャージ残高は{balance}円です．")
@@ -48,9 +56,10 @@ class Uchika():
             balance += charge
             print(f"チャージ残高は{balance}円です．")
         return balance
-    
+
     def charge(self, balance: int) -> int:
         charges = []
+        # チャージ金額一覧
         for i in range(1000, 11000, 1000):
             charges.append(i)
         # print(charge)
@@ -59,16 +68,21 @@ class Uchika():
         for i in range(len(charges)):
             print(f"{i+1}: {charges[i]}円\n")
         print("チャージする金額を選択してください（キャンセルする場合には99を入力）")
-        
-        input_charge = int(input())
-        if input_charge > 1 and input_charge < 11:
-            print(f"{input_charge * 1000}円チャージします．")
-            balance += input_charge * 1000
-            print(f"チャージ残高は{balance}円です．")
-        elif input_charge == 99:
-            print("チャージをキャンセルしました．")
+        while True:
+            input_charge = int(input())
+            # 入力チェック
+            if input_charge not in range(1, len(charges)+1) and input_charge != 99:
+                print("正しい数値を入力してください．")
+                return 0
+            if input_charge > 0 and input_charge < 11:
+                print(f"{input_charge * 1000}円チャージします．")
+                balance += input_charge * 1000
+                print(f"チャージ残高は{balance}円です．")
+            elif input_charge == 99:
+                print("チャージをキャンセルしました．")
+            break
         return balance
-    
+
 def main():
     uchika = Uchika()
     balance = 500   # 残高を初期化
@@ -83,7 +97,6 @@ def main():
         elif menu == 99:
             print("システムを終了します．")
             break
-                
+
 if __name__ == "__main__":
     main()
-        
