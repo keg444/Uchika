@@ -4,7 +4,7 @@ def menu() -> int:
     for i in range(len(functions)):
         print(f"{i+1}: {functions[i]}")
     
-    print("使用する機能を選択してください（終了する場合には99を入力）")
+    print("\n使用する機能を選択してください（終了する場合には99を入力）")
     # 入力チェック
     while True:
         try:
@@ -12,8 +12,9 @@ def menu() -> int:
         except ValueError:
             print("正しい数値を入力してください．")
         else:
-            if input_func not in range(1, len(functions)) and input_func != 99:
+            if input_func not in range(1, len(functions)+1) and input_func != 99:
                 print("正しい数値を入力してください．")
+                continue
             break
     return input_func
 
@@ -22,7 +23,7 @@ def select_station() -> int:   # 辞書にしたほうが良くね？→参照�
     fares = [133, 4128, 7990]
     print("【乗車駅選択】\n")
     for i in range(len(stations)):
-        print(f"{i+1}: {stations[i]}駅から : {fares[i]}円")
+        print(f"{i+1}: {stations[i]}駅から  {fares[i]}円")
     print("\n乗車した駅を入力してください（キャンセルする場合には99を入力）")
     while True:
         # 入力チェック
@@ -43,8 +44,8 @@ def select_station() -> int:   # 辞書にしたほうが良くね？→参照�
     print(f"乗車駅は{stations[destination-1]}で料金は{fares[destination-1]}円です．")
     return fares[destination - 1]
 
-def pay(balance: int, fare: int) -> int:  # charge=残高
-    charge = 3000
+def pay(balance: int, fare: int) -> int:  # balance=残高
+    charge = 3000   # チャージ額
     print(f"チャージ残高は{balance}円です．")
     if balance < fare:
         print("残高不足です．")
@@ -68,8 +69,8 @@ def charge(balance: int) -> int:
     print("【チャージ機能】\n")
     print(f"チャージ残高は{balance}円です．\n")
     for i in range(len(charges)):
-        print(f"{i+1}: {charges[i]}円\n")
-    print("チャージする金額を選択してください（キャンセルする場合には99を入力）")
+        print(f"{i+1}: {charges[i]}円")
+    print("\nチャージする金額を選択してください（キャンセルする場合には99を入力）")
     # 入力チェック
     while True:
         try:
